@@ -1,0 +1,41 @@
+env:
+  GOPATH: ${PWD}/..
+params: 
+  basepath: ${env:PWD}
+  recursive: true
+excludes:
+  - "*.tmp"
+  - "*.bak"
+  - "*~"
+watchers:
+  - name: go
+    command: 
+      type: builtin.go.run
+      exec: testApp 
+      params: test.go
+      args: :8080
+    duration: 1s
+    excludes:
+      - "*_test.go"
+      - "*.tmp"
+    directories:
+      - path: ${params:basepath}
+        recursive: true
+        includes:
+          - "*.go"
+          - "**/*.go"
+        excludes:
+          - "**/*_test.go"
+  - name: web
+    command: 
+      type: custom
+      exec: webpack
+    duration: 5s
+    excludes:
+    directories:
+      - path: ${params:basepath}/webapps/
+        recursive: true
+        includes:
+          - "*.*"
+        excludes:
+          - tmp/

@@ -105,7 +105,7 @@ func New(prefix string, level int, verbose bool) logger {
 }
 
 func Prefix(prefix string) string {
-	return GreenBold("[" + prefix + "]")
+	return BlueBold("[" + prefix + "]")
 }
 
 // pacakge functions
@@ -216,8 +216,8 @@ func (this *logger) printf(level int, formatString string, a ...interface{}) {
 
 	if level >= ERROR {
 		callStack := debug.Stack()
-		fmt.Print(RedBold("=== CALL STACK [START] ===\n"))
-		fmt.Print(Red(string(callStack)))
-		fmt.Print(RedBold("*** CALL STACK [ END ] ***\n"))
+		fmt.Fprint(os.Stderr, RedBold("=== CALL STACK [START] ===\n"))
+		fmt.Fprint(os.Stderr, Red(string(callStack)))
+		fmt.Fprint(os.Stderr, RedBold("*** CALL STACK [ END ] ***\n"))
 	}
 }
